@@ -1,0 +1,161 @@
+---make rabbitmq dir
+sudo mkdir rabbitmq
+
+-add repo
+sudo wget https://packages.erlang-solutions.com/erlang-solutions_1.0_all.deb 
+sudo dpkg -i erlang-solutions_1.0_all.deb
+
+delete and type stretch
+
+- update repo info
+sudo apt-get update
+
+-install pre reqs
+wget http://packages.erlang-solutions.com/site/esl/esl-erlang/FLAVOUR_1_general/esl-erlang_20.1.7-1~raspbian~stretch_armhf.deb (https://packages.erlang-solutions.com/erlang/#tabs-debian)
+sudo dpkg -i esl-erlang_20.1.7-1~raspbian~stretch_armhf.deb
+sudo apt-get -f install
+sudo apt-get install logrotate -y
+sudo apt-get install socat
+pip install pika
+
+-install any missing dependencies
+sudo apt-get -f install
+
+-find most up to date release, download and dpk
+https://github.com/rabbitmq/rabbitmq-server/releases
+(all.deb)
+sudo wget https://github.com/rabbitmq/rabbitmq-server/releases/download/v3.7.5-rc.1/rabbitmq-server_3.7.5.rc.1-1_all.deb
+sudo dpkg -i rabbitmq-server_3.7.5.rc.1-1_all.deb
+
+-install any missing dependencies
+sudo apt-get -f install
+
+-Configure rabbitmq
+sudo rabbitmq-plugins enable rabbitmq_management
+sudo rabbitmqctl add_user pi Sh1tsh1t11
+sudo rabbitmqctl set_user_tags pi administrator
+sudo rabbitmqctl set_permissions -p / pi ".*" ".*" ".*"
+
+-access rabit mq
+IP:15672
+Login with credentials just created
+
+create exchange
+name: LightwaveRf
+Type: Direct
+Click add
+
+Create que
+name: LightwaveRf
+Drability: Durable
+click add
+
+-install pika for scripts
+pip3 install pika
+
+
+-install service to grab qued messages
+cd /home/pi
+mkdir services
+cd services
+wget https://raw.githubusercontent.com/SCCMOG/Home-Assistant/master/LightwaveRF%20Light%20Custom%20Component/services/LightwaveRF_service.py
+sudo nano LightwaveRF_service.py
+Change username and password to previously configured for RabbitMQ
+ctrl + x
+y
+
+-configure service
+sudo nano /lib/systemd/system/lightwaverf.service
+copy and paste below...... (select all between the lines copy and then right click in terminal window to paste)
+
+-------------------------------------------------------------------------------------------------------------
+[Unit]
+Description=Recieves LightwaveRF Commands from Rabbit MQ
+After=multi-user.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/python /home/pi/services/LightwaveRF_service.py
+Restart=on-abort
+
+[Install]
+WantedBy=multi-user.target
+-------------------------------------------------------------------------------------------------------------
+
+-configure service permisions and start
+sudo chmod 644 /lib/systemd/system/lightwaverf.service
+chmod +x /home/pi/services/LightwaveRF_service.py
+sudo systemctl daemon-reload
+sudo systemctl enable lightwaverf.service
+sudo systemctl start lightwaverf.service
+
+-check service
+sudo systemctl status lightwaverf.service
+
+-install component
+cd /home/homeassistant/.homeassistant/
+mkdir custom_components
+cd custom_components
+mkdir light
+cd light
+wget https://raw.githubusercontent.com/SCCMOG/Home-Assistant/master/LightwaveRF%20Light%20Custom%20Component/light/lightwaverf_light.py
+
+-Configure Configuration.yaml
+
+The room number and device number can be found on the web application by viewing the source of the room.
+If you only have a couple of lights then try just adding R1D1 first.
+R stands for Room
+D stands for device.
+Name is what you would like them called. These lights are fully dimmable and group turning on and off is fully supported.
+Dimming though alexa and google home also works.
+
+light:
+  - platform: lightwaverf_light
+    rabbithost: localhost
+    rabbitport: 5672
+    rabbitque: LightwaveRF
+    rabbituname: [yourusernameforrabbitmq]
+    rabbitpass: [yourpasswordforthatuser]
+    lights:
+      - id: R1D1
+        name: Lounge One
+      - id: R1D2
+        name: Lounge Two
+      - id: R2D1
+        name: Office Light 
+      - id: R3D1
+        name: Bathroom Spot Lights
+      - id: R3D2
+        name: Bathroom Extractor
+      - id: R4D1
+        name: Bedroom Main Light
+      - id: R4D2
+        name: Bedroom Mirror Lights
+      - id: R5D1
+        name: Hall Light
+      - id: R6D1
+        name: Porch Light
+      - id: R7D1
+        name: Landing Lights
+      - id: R8D1
+        name: Attic Light
+      - id: R9D1
+        name: Fridge Lights
+      - id: R9D2
+        name: Dining Lights
+      - id: R10D1
+        name: Kitchen Spot Lights
+
+
+Finally save your config and reboot home assistant
+sudo systemctl restart home-assistant@homeassistant.service
+
+
+
+        
+
+
+
+
+
+

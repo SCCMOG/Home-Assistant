@@ -1,4 +1,12 @@
+-pairing
+First you have to pair you pi to the wifi link
+Open a terminal on your pi and copy the line below.
+echo -ne "100,\!F*p." | nc -u -w1 [IP.OF.YOUR.WIFILIN] 9760
+Then paste it into the terminal and hit enter
+now the wifi link should flash, click the button on the link and you are now paired.
+
 ---make rabbitmq dir
+cd /home/pi
 sudo mkdir rabbitmq
 
 -add repo

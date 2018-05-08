@@ -48,7 +48,7 @@ $ pip install pika
 ```
 - Install any missing dependencies
 ```sh
-sudo apt-get -f install
+$ sudo apt-get -f install
 ```
 - To find the most up to date release of RabbitMQ goto:
 https://github.com/rabbitmq/rabbitmq-server/releases
@@ -61,7 +61,7 @@ $ sudo dpkg -i rabbitmq-server_3.7.5.rc.1-1_all.deb
 
 - Install any missing dependencies
 ```sh
-sudo apt-get -f install
+$ sudo apt-get -f install
 ```
 - Configure RabbitMQ permissions and accounts. I tend to use the pi account for this.
 ```sh

@@ -205,3 +205,6 @@ light:
 $ sudo systemctl restart home-assistant@homeassistant.service
 ```
 
+- My home with the component installed:
+![alt text](https://raw.githubusercontent.com/SCCMOG/Home-Assistant/master/LightwaveRF%20Light%20Custom%20Component/LightWaveRF_Generation_1_Home_Assistant_Lights.JPG)
+

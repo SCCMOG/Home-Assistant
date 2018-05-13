@@ -1,4 +1,4 @@
-# LightwaveRF Lights - Home Assistant
+# LightwaveRF Lights Setup Guide - Home Assistant
 
 
 This component has been created for LightwaveRF Lights. The reasoning behind it is simple, I have them throughout the house and was sick of using CMD line switches. It uses RabbitMQ to que the messages also to ensure it never misses a command.
@@ -12,7 +12,7 @@ Please follow the install guide below and let me know what you think! It is not 
   - First you have to pair you pi to the wifi link.
   - Open a terminal on your pi and copy the line below, then add the IP address of your LightwaveRF Wifi Link.
 ```sh
-$ echo -ne "100,\!F*p." | nc -u -w1 [IP.OF.YOUR.WIFILIN] 9760
+$ echo -ne "100,\!F*p." | nc -u -w1 [IP.OF.YOUR.WIFILINK] 9760
 ```
 - Now hit enter.
 - The wifi link should flash, click the button on the link and you are now paired.

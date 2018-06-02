@@ -19,7 +19,7 @@ from homeassistant.const import (CONF_NAME, CONF_ID, CONF_LIGHTS)
 import homeassistant.helpers.config_validation as cv
 
 #Requirements
-REQUIREMENTS = ['pika']
+REQUIREMENTS = ['pika==0.11.2']
 
 #set brightness support
 SUPPORT_LIGHTWAVE = (SUPPORT_BRIGHTNESS)

@@ -3,7 +3,8 @@
 
 This component has been created for LightwaveRF Lights. The reasoning behind it is simple, I have them throughout the house and was sick of using CMD line switches. It uses RabbitMQ to que the messages also to ensure it never misses a command.
 
-Please follow the install guide below and let me know what you think! It is not the prettiest component but dam does it work well!
+Please follow the install guide below and let me know what you think! It is not the prettiest component but dam does it work well! It also assumes that you have setup Home Assistant using [Hassbian](https://www.home-assistant.io/docs/installation/hassbian/installation/ "Hassbian Install Guide").
+If you have not setup Home Assitant yet please follow my video guide [Here](https://youtu.be/uk-_8xomZac "Install Hassbian - AutoM8"). 
 
 # Installation
 
@@ -24,6 +25,7 @@ $ echo -ne "100,\!F*p." | nc -u -w1 [IP.OF.YOUR.WIFILINK] 9760
 ```sh
 $ cd /home/pi
 $ sudo mkdir rabbitmq
+$ cd rabbitmq
 ```
 
 #### Install Pre-Reqs
@@ -41,10 +43,12 @@ $ sudo apt-get update
 ```sh
 $ wget http://packages.erlang-solutions.com/site/esl/esl-erlang/FLAVOUR_1_general/esl-erlang_20.1.7-1~raspbian~stretch_armhf.deb 
 $ sudo dpkg -i esl-erlang_20.1.7-1~raspbian~stretch_armhf.deb
-$ sudo apt-get -f install
+$ sudo apt-get -f install -y
 $ sudo apt-get install logrotate -y
 $ sudo apt-get install socat
-$ pip install pika
+$ sudo apt-get install python-pip -y
+$ sudo pip install pika
+$ sudo reboot
 ```
 - Install any missing dependencies
 ```sh
@@ -77,20 +81,20 @@ $ sudo rabbitmqctl set_permissions -p / [youruser] ".*" ".*" ".*"
 ```
 - Now login with credentials just created
 
-- Now click exchanges then at the bottom click 'create exchange'
+- Now click exchanges then at the bottom click 'Add a new exchange'
 - Only modify below to match.
 ```sh
-name: LightwaveRf
+name: LightwaveRF
 Type: Direct
 ```
-- Now click add exchange.
-- Now click Queues and at the bottom click 'create queu'
+- Now click "Add exchange".
+- Now click Queues and at the bottom click 'Add a new queue'
 - Only modify below to match.
 ```sh
-name: LightwaveRf
+name: LightwaveRF
 Drability: Durable
 ```
-- Click add.
+- Click "Add queue".
 - RabbitMQ is now setup ready to be used.
 
 #### Install the Python Service
@@ -123,6 +127,7 @@ Restart=on-abort
 [Install]
 WantedBy=multi-user.target
 ```
+- now hit 'ctrl+x' followed by 'y' and then enter to save the new service.
 - Final configuration for service.
 ```sh
 $ sudo chmod 644 /lib/systemd/system/lightwaverf.service
@@ -142,14 +147,14 @@ $ python LightwaveRF_Service.py
 ```
 
 #### Install the LightwaveRF_Light Component
-- Firstly we need to download the file to the correct directory.
+- Firstly we need to download the file to the correct directory (assuming you are running hassbian).
 ```sh
 $ cd /home/homeassistant/.homeassistant/
-$ mkdir custom_components
+$ sudo mkdir custom_components
 $ cd custom_components
-$ mkdir light
+$ sudo mkdir light
 $ cd light
-$ wget https://raw.githubusercontent.com/SCCMOG/Home-Assistant/master/LightwaveRF%20Light%20Custom%20Component/light/lightwaverf_light.py
+$ sudo wget https://raw.githubusercontent.com/SCCMOG/Home-Assistant/master/LightwaveRF%20Light%20Custom%20Component/light/lightwaverf_light.py
 ```
 
 - Now we have the Component we need to edit the Configuration.yaml (or light.yaml if you use it).

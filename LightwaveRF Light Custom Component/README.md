@@ -3,7 +3,8 @@
 
 This component has been created for LightwaveRF Lights. The reasoning behind it is simple, I have them throughout the house and was sick of using CMD line switches. It uses RabbitMQ to que the messages also to ensure it never misses a command.
 
-Please follow the install guide below and let me know what you think! It is not the prettiest component but dam does it work well! It also assumes that you have setup Home Assistant using [Hassbian](https://www.home-assistant.io/docs/installation/hassbian/installation/ "Hassbian Install Guide").
+Please follow the install guide below and let me know what you think! It is not the prettiest component but dam does it work well! It also assumes that you have setup Home Assistant using [Hassbian](https://www.home-assistant.io/docs/installation/hassbian/installation/ "Hassbian").
+
 If you have not setup Home Assitant yet please follow my video guide [Here](https://youtu.be/uk-_8xomZac "Install Hassbian - AutoM8"). 
 
 # Installation

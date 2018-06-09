@@ -48,7 +48,14 @@ $ sudo apt-get -f install -y
 $ sudo apt-get install logrotate -y
 $ sudo apt-get install socat
 $ sudo apt-get install python-pip -y
+```
+- Install service and component dependecies. (For some reason it is not auto installing Pika in the Virtual Env of Hassbian so we have to do it manually for now).
+```sh
 $ sudo pip install pika
+$ sudo -u homeassistant -H -s
+$ source /srv/homeassistant/bin/activate
+$ pip3 install pika
+$ exit
 $ sudo reboot
 ```
 - Install any missing dependencies

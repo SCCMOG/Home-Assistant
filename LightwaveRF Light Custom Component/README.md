@@ -13,7 +13,7 @@ If you have not setup Home Assitant yet please follow my video guide [Here](http
 
   - First you have to pair you pi to the wifi link.
   - SSH to the to your raspberry pi and copy the line below, then add the IP address of your LightwaveRF Wifi Link.
-  - NOTE for Synlogy you have to install synogear in while SSH is up to get access to netcat [sudo synogear install]
+  - NOTE for Synlogy you have to install synogear to get access to netcat [sudo synogear install]
 ```sh
 $ echo -ne "100,\!F*p." | ncat -u -w1 [IP.OF.YOUR.WIFILINK] 9760
 ```
